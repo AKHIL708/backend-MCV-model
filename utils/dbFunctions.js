@@ -26,7 +26,7 @@ async function update(tableName, conditions) {
     .map(({ column, value }) => `${column} = "${value}"`)
     .join(" , ");
 
-  // format sent will be like this req.body
+  // format sent will be like this req.body ok
   //    {
   //     "id" : "1705920510203",
   //     "data" : [
