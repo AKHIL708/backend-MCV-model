@@ -3,6 +3,8 @@ const {
   getAllUsers,
   getOneUser,
   getUserById,
+  updateUserById,
+  deleteUserById,
 } = require("../models/users.model");
 
 // only req.body object data will be pass from here ..
@@ -19,6 +21,26 @@ router.post("/getParticularUser", async (req, res) => {
 
 router.get("/:userId", async (req, res) => {
   let result = await getUserById(req.params.userId);
+  return controllerResponseAndErrorHanlder(result, res);
+});
+
+router.post("/update", async (req, res) => {
+  // the req.body format will be
+  //    {
+  //     "id" : "1705920510203",
+  //     "data" : [
+  //         {
+  //             "column" : "userName",
+  //             "value" : "userTwo2222"
+  //         }
+  //     ]
+  // }
+  let result = await updateUserById(req.body);
+  return controllerResponseAndErrorHanlder(result, res);
+});
+
+router.delete("/:userId", async (req, res) => {
+  let result = await deleteUserById(req.params.userId);
   return controllerResponseAndErrorHanlder(result, res);
 });
 

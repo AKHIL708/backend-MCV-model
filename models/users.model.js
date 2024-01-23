@@ -2,6 +2,8 @@ const {
   getAll,
   getOneBasedOnCondition,
   getById,
+  deleteOne,
+  update,
 } = require("../utils/dbFunctions");
 let tableName = "users";
 
@@ -21,9 +23,19 @@ const getUserById = async (id) => {
   let result = await getById(tableName, id);
   return result;
 };
+const updateUserById = async (id) => {
+  let result = await update(tableName, id);
+  return result;
+};
+const deleteUserById = async (id) => {
+  let result = await deleteOne(tableName, id);
+  return result;
+};
 
 module.exports = {
   getAllUsers,
   getOneUser,
   getUserById,
+  deleteUserById,
+  updateUserById
 };

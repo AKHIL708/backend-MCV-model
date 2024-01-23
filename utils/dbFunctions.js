@@ -7,7 +7,7 @@ async function getAll(tableName) {
 }
 
 async function getById(tableName, id) {
-  let sql = `select * from ${tableName} where isd = "${id}"`;
+  let sql = `select * from ${tableName} where id = "${id}"`;
   return errorHandler(sql);
 }
 async function getOneBasedOnCondition(tableName, conditions) {
@@ -18,8 +18,38 @@ async function getOneBasedOnCondition(tableName, conditions) {
   return errorHandler(sql);
 }
 
+async function update(tableName, conditions) {
+  //     UPDATE table_name
+  // SET column1 = value1, column2 = value2, ...
+  // WHERE condition;
+  let reConditions = conditions.data
+    .map(({ column, value }) => `${column} = "${value}"`)
+    .join(" , ");
+
+  // format sent will be like this req.body
+  //    {
+  //     "id" : "1705920510203",
+  //     "data" : [
+  //         {
+  //             "column" : "userName",
+  //             "value" : "userTwo2222"
+  //         }
+  //     ]
+  // }
+  let sql = `UPDATE ${tableName} SET ${reConditions} WHERE id = "${conditions.id}"`;
+  return errorHandler(sql);
+}
+
+async function deleteOne(tableName, userId) {
+  // assuming that the column name in the table will be id  orelse pass conditions according #array
+  let sql = `DELETE FROM ${tableName} WHERE id = "${userId}";`;
+  return errorHandler(sql);
+}
+
 module.exports = {
   getAll,
   getOneBasedOnCondition,
   getById,
+  deleteOne,
+  update,
 };
